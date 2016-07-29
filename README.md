@@ -12,6 +12,7 @@ UI给我了五张图片，我感觉太浪费了，自定义view完全可以做�
 * 扩展
 
   ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
+
   ![demo](http://ww3.sinaimg.cn/large/005Xtdi2jw1f4g89vqhqwg30690b4mzu.gif)
 
 ##需要知道技术点
