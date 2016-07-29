@@ -11,7 +11,7 @@ UI给我了五张图片，我感觉太浪费了，自定义view完全可以做�
 
 * 扩展
 
-  ![demo](http://ob28exvja.bkt.clouddn.com/path_5.gif)
+  ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
 
   ![demo](http://ww3.sinaimg.cn/large/005Xtdi2jw1f4g89vqhqwg30690b4mzu.gif)
 
@@ -214,7 +214,7 @@ pathCircle.arcTo(rectF, -90, 359);
 
 ##扩展
 
- ![demo](http://ob28exvja.bkt.clouddn.com/path_5.gif)
+ ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
 
  上面的效果在很多场景中我们都能用到，不如加载、经度显示等；其实通过动画我们也可以实现，但是自定义view也是可以的，而且它的效率更高，
  灵活性更加好，功能也可以做的更加强大，主要是你实现起来还很简单哦！
