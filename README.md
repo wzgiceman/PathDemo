@@ -66,7 +66,6 @@ matrix	根据 falgs 封装好的matrix	会根据 flags 的设置而存入不同�
 flags	规定哪些内容会存入到matrix中	可选择
 POSITION_MATRIX_FLAG(位置)
 ANGENT_MATRIX_FLAG(正切)
-其实这个方法就相当于我们在前一个例子中封装 matrix 的过程由 getMatrix 替我们做了，我们可以直接得到一个封装好到 matrix，岂不快哉。
 */
 boolean getMatrix (float distance, Matrix matrix, int flags)
 ```
