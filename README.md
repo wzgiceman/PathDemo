@@ -1,17 +1,17 @@
 #自定义view之无所不能的path
 最近项目中需要完成以下这个需求
 
-![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/pp.png)
+![demo](http://ob28exvja.bkt.clouddn.com/path_6.png)
 
 UI给我了五张图片，我感觉太浪费了，自定义view完全可以做而且适配起来更加的方便
 ##最终实现效果
 * 项目效果
 
-  ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/card.gif)
+  ![demo](http://ob28exvja.bkt.clouddn.com/path_4.gif)
 
 * 扩展
 
-  ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
+  ![demo](http://ob28exvja.bkt.clouddn.com/path_5.gif)
 
   ![demo](http://ww3.sinaimg.cn/large/005Xtdi2jw1f4g89vqhqwg30690b4mzu.gif)
 
@@ -19,7 +19,7 @@ UI给我了五张图片，我感觉太浪费了，自定义view完全可以做�
 在实现这个过程之前，我们需要了解path的一系列的原理（如果你了解path的用法直接跳过）
 
 ###PathMeasure（是一个用来测量Path的类，主要有以下方法)
-![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path_1.png)
+![demo](http://ob28exvja.bkt.clouddn.com/path_1.png)
 
 * setPath、 isClosed 和 getLength
 
@@ -66,7 +66,7 @@ matrix	根据 falgs 封装好的matrix	会根据 flags 的设置而存入不同�
 flags	规定哪些内容会存入到matrix中	可选择
 POSITION_MATRIX_FLAG(位置)
 ANGENT_MATRIX_FLAG(正切)
-其实这个方法就相当于我们在前一个例子中封装 matrix 的过程由 getMatrix 替我们做了，我们可以直接得到一个封装好到 matrix，岂不快哉。
+
 */
 boolean getMatrix (float distance, Matrix matrix, int flags)
 ```
@@ -74,7 +74,7 @@ boolean getMatrix (float distance, Matrix matrix, int flags)
 ##实现
 可以明显的看出这个view的5个园的圆心都在一个大的圆上
 
-![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/1.png)
+![demo](http://ob28exvja.bkt.clouddn.com/path_2.png)
 
 ### 通过path得到一个园，然后将圆分割5份
 
@@ -100,7 +100,7 @@ pathCircle.addCircle(with / 2, hight / 2, hight / 2 - pading - radius, Path.Dire
    }
 ```
 
-![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/2.png)
+![demo](http://ob28exvja.bkt.clouddn.com/path_3.png)
 
 ### 实现完以后我们发现问题，圆的位置每个圆环的位置和效果图不是一样的，那是为什么呢？
 
@@ -214,7 +214,7 @@ pathCircle.arcTo(rectF, -90, 359);
 
 ##扩展
 
- ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
+ ![demo](http://ob28exvja.bkt.clouddn.com/path_5.gif)
 
  上面的效果在很多场景中我们都能用到，不如加载、经度显示等；其实通过动画我们也可以实现，但是自定义view也是可以的，而且它的效率更高，
  灵活性更加好，功能也可以做的更加强大，主要是你实现起来还很简单哦！
