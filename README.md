@@ -7,7 +7,7 @@ UI给我了五张图片，我感觉太浪费了，自定义view完全可以做�
 ##最终实现效果
 * 项目效果
 
-  ![demo](http://ob28exvja.bkt.clouddn.com/path_4.gif)
+  ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/card.gif)
 
 * 扩展
 
