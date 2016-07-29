@@ -68,3 +68,155 @@ ANGENT_MATRIX_FLAG(正切)
 */
 boolean getMatrix (float distance, Matrix matrix, int flags)
 ```
+
+##实现
+可以明显的看出这个view的5个园的圆心都在一个大的圆上
+
+![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/1.png)
+
+1. 通过path得到一个园，然后将圆分割5份
+
+```java
+Path pathCircle = new Path();
+pathCircle.addCircle(with / 2, hight / 2, hight / 2 - pading - radius, Path.Direction.CW);
+```
+
+2. 通过PathMeasure的getPosTan方法得到等分点在圆上的坐标,然后判断当前的状态，给选中的状态圆不同的颜色值
+
+```java
+ float[] position = new float[2];
+        for (int index = 0; index < 5; index++) {
+            if (currentPosition == index) {
+                paint.setColor(Color.RED);
+            } else {
+                paint.setColor(Color.BLUE);
+            }
+            float allLength = pathMeasure.getLength();
+            distance = (allLength / 5) * (index + 1);
+            pathMeasure.getPosTan(distance, position, tan);
+            canvas.drawCircle(position[0], position[1], radius, paint);
+   }
+```
+
+![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/1.png)
+
+3. 实现完以后我们发现问题，圆的位置每个圆环的位置和效果图不是一样的，那是为什么呢？
+
+其实在path添加大圆的时候我们只能控制path路径的轨迹方向，并不能指定其实位置而且现在我们写死了很多变量：颜色，圆环数等***
+既然圆无法指定起始轨迹的位置，那我们用arc（圆弧）去画
+
+##优化
+
+1. 画出圆弧，指定开始位置为正上方及时-90°
+
+```java
+Path pathCircle = new Path();
+RectF rectF = new RectF(pading + radius, pading + radius, with - pading - radius, hight - pading - radius);
+pathCircle.arcTo(rectF, -90, 359);
+
+```
+
+2. 通过自定义属性动态指定参数
+
+```java
+    //    宽
+    private int with;
+    //    高
+    private int hight;
+    //    间距
+    private int pading;
+    //    小圆环半径
+    private int radius;
+    //    圆环宽度
+    private int paintWith;
+    //    圆环数
+    private int pie;
+    //    当前选中圆环
+    private int currentPosition;
+    //    正常颜色
+    private int normalColor;
+    //    选中颜色
+    private int clickColor;
+    //    画笔
+    private Paint paint;
+
+
+    public ProgressCircleView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ProgressCircleOldView);
+        pading = a.getDimensionPixelOffset(R.styleable.ProgressCircleOldView_pading, 0);
+        radius = a.getDimensionPixelOffset(R.styleable.ProgressCircleOldView_radius, 10);
+        paintWith = a.getDimensionPixelOffset(R.styleable.ProgressCircleOldView_paintWith, 4);
+        pie = a.getInt(R.styleable.ProgressCircleOldView_pie, 5);
+        currentPosition = a.getInt(R.styleable.ProgressCircleOldView_currentPosition, 0);
+        normalColor = a.getColor(R.styleable.ProgressCircleOldView_normalColor, Color.BLUE);
+        clickColor = a.getColor(R.styleable.ProgressCircleOldView_clickColor, Color.RED);
+        a.recycle();
+        initPaint();
+    }
+```
+
+对应的xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressCircleOldView">
+        <!--间距-->
+        <attr name="pading" format="dimension"/>
+        <!--小圆环半径-->
+        <attr name="radius" format="dimension"/>
+        <!--圆环宽度-->
+        <attr name="paintWith" format="dimension"/>
+        <!--圆环数-->
+        <attr name="pie" format="integer"/>
+        <!--当前选中圆环-->
+        <attr name="currentPosition" format="integer"/>
+        <!--正常颜色-->
+        <attr name="normalColor" format="color"/>
+        <!-- 选中颜色-->
+        <attr name="clickColor" format="color"/>
+    </declare-styleable>
+</resources>
+```
+
+3. 得到坐标点，画出圆
+
+```java
+ @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        float[] position = new float[2];
+        float[] tan = new float[2];
+        float distance;
+        Path pathCircle = new Path();
+        RectF rectF = new RectF(pading + radius, pading + radius, with - pading - radius, hight - pading - radius);
+        pathCircle.arcTo(rectF, -90, 359);
+        PathMeasure pathMeasure = new PathMeasure(pathCircle, false);
+        for (int index = 0; index < pie; index++) {
+            if (currentPosition == index) {
+                paint.setColor(clickColor);
+            } else {
+                paint.setColor(normalColor);
+            }
+            float allLength = pathMeasure.getLength();
+            distance = (allLength / pie) * (index);
+            pathMeasure.getPosTan(distance, position, tan);
+            canvas.drawCircle(position[0], position[1], radius, paint);
+        }
+    }
+
+```
+
+**到这里我们基本已经完成了这个需求了**但是估计大家还是没有讲PathMeasure没有很好的理解，所以就有了下面的扩展
+
+##扩展
+
+ ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
+
+ 上面的效果在很多场景中我们都能用到，不如加载、经度显示等；其实通过动画我们也可以实现，但是自定义view也是可以的，而且它的效率更高，
+ 灵活性更加好，功能也可以做的更加强大，主要是你实现起来还很简单哦！
+
+
+
+

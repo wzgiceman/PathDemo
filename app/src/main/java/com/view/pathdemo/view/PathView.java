@@ -68,6 +68,8 @@ public class PathView extends View {
         paint.setColor(Color.YELLOW);
         measure.getPosTan((int) (measure.getLength() * progress), position, tan);
         canvas.drawPath(path, paint);
+
+
 //        箭头
         paint.setColor(Color.RED);
         Path path1 = new Path();

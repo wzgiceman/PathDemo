@@ -41,11 +41,11 @@ public class ProgressCircleOldView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        float[] position = new float[2];
         float[] tan = new float[2];
         Path pathCircle = new Path();
         pathCircle.addCircle(with / 2, hight / 2, hight / 2 - pading - radius, Path.Direction.CW);
         PathMeasure pathMeasure = new PathMeasure(pathCircle, false);
+        float[] position = new float[2];
         for (int index = 0; index < 5; index++) {
             if (currentPosition == index) {
                 paint.setColor(Color.RED);
