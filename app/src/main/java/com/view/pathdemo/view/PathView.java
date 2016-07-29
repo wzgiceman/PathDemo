@@ -47,8 +47,6 @@ public class PathView extends View {
     float[] tan = new float[2];
 
 
-
-
     /**
      * 绘制panth上每一个点的位置
      * 带箭头的进度框
@@ -88,7 +86,6 @@ public class PathView extends View {
     }
 
 
-
     /**
      * 绘制panth上每一个点的位置
      * 带箭头的进度框
@@ -102,6 +99,7 @@ public class PathView extends View {
         Path path = new Path();
         path.addCircle(600, 400, 100, Path.Direction.CCW);
         PathMeasure measure = new PathMeasure(path, false);
+//        按照比例获取
         progress = progress < 1 ? progress + 0.0005 : 0;
         Matrix matrix = new Matrix();
         paint.setColor(Color.YELLOW);
@@ -111,10 +109,12 @@ public class PathView extends View {
 //        箭头
         paint.setColor(Color.RED);
         Path path1 = new Path();
-        Path path2 = new Path();
         path1.moveTo(position[0] - 20, position[1] + 20);
         path1.lineTo(position[0], position[1]);
         path1.lineTo(position[0] + 20, position[1] + 20);
+//        是否闭合，闭合就是三角形了
+        path1.close();
+        Path path2 = new Path();
         float degrees = (float) (Math.atan2(tan[1], tan[0]) * 180.0 / Math.PI);
         matrix.setRotate(degrees + 90, position[0], position[1]);
         path2.addPath(path1, matrix);

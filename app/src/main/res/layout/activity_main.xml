@@ -8,12 +8,6 @@
     >
 
 
-    <com.view.pathdemo.view.ProgressCircleOldView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"/>
-
-
     <com.view.pathdemo.view.ProgressCircleView
         android:id="@+id/progress"
         android:layout_width="60dp"
@@ -21,7 +15,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:text="Hello World!"
-        android:visibility="gone"
         progress:clickColor="@color/colorPrimaryDark"
         progress:normalColor="@color/colorAccent"
         progress:pading="5dp"
@@ -34,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:visibility="gone"/>
+        />
 
 
 </LinearLayout>

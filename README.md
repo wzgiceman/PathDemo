@@ -12,6 +12,7 @@ UI给我了五张图片，我感觉太浪费了，自定义view完全可以做�
 * 扩展
 
   ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
+  ![demo](http://ww3.sinaimg.cn/large/005Xtdi2jw1f4g89vqhqwg30690b4mzu.gif)
 
 ##需要知道技术点
 在实现这个过程之前，我们需要了解path的一系列的原理（如果你了解path的用法直接跳过）
@@ -98,7 +99,7 @@ pathCircle.addCircle(with / 2, hight / 2, hight / 2 - pading - radius, Path.Dire
    }
 ```
 
-![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/1.png)
+![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/2.png)
 
 3. 实现完以后我们发现问题，圆的位置每个圆环的位置和效果图不是一样的，那是为什么呢？
 
@@ -217,6 +218,116 @@ pathCircle.arcTo(rectF, -90, 359);
  上面的效果在很多场景中我们都能用到，不如加载、经度显示等；其实通过动画我们也可以实现，但是自定义view也是可以的，而且它的效率更高，
  灵活性更加好，功能也可以做的更加强大，主要是你实现起来还很简单哦！
 
+ 其实上面的矩形和圆轨迹都是走的同样的逻辑，不过是path添加了不同的图形，所以你可以自由发挥哦，所以就拿上面的圆形进度为例子来讲解了
+
+ 1. path给定一个图形
+
+```java
+  Path path = new Path();
+  path.addCircle(600, 400, 100, Path.Direction.CCW);
+
+```
+
+2. 通过比getPosTan得到位置和偏移量
+
+```java
+//        按照比例获取
+        progress = progress < 1 ? progress + 0.0005 : 0;
+        Matrix matrix = new Matrix();
+        paint.setColor(Color.YELLOW);
+        measure.getPosTan((int) (measure.getLength() * progress), position, tan);
+
+```
+
+3. 通过得到的点坐标画出箭头
+
+```java
+        Path path1 = new Path();
+        path1.moveTo(position[0] - 20, position[1] + 20);
+        path1.lineTo(position[0], position[1]);
+        path1.lineTo(position[0] + 20, position[1] + 20);
+//        是否闭合，闭合就是三角形了
+        path1.close();
+```
+
+4. 通过tan得到箭头的偏移量
+
+```java
+  Path path2 = new Path();
+        float degrees = (float) (Math.atan2(tan[1], tan[0]) * 180.0 / Math.PI);
+        matrix.setRotate(degrees + 90, position[0], position[1]);
+        path2.addPath(path1, matrix);
+```
+
+5. 通过getSegment得到进度上截取的弧线，链接箭头
+
+```java
+  //        进度线
+        measure.getSegment(-1000, (int) (measure.getLength() * progress), path2, true);
+        paint.setColor(Color.BLUE);
+        canvas.drawPath(path2, paint);
+
+```
+
+6. 最后不断的刷新界面重画
+
+```java
+    /**
+     * 绘制panth上每一个点的位置
+     * 带箭头的进度框
+     *
+     * @param canvas
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void PaintMatr(Canvas canvas) {
+        paint.setStrokeWidth(10);
+        paint.setStyle(Paint.Style.STROKE);
+        Path path = new Path();
+        path.addCircle(600, 400, 100, Path.Direction.CCW);
+        PathMeasure measure = new PathMeasure(path, false);
+//        按照比例获取
+        progress = progress < 1 ? progress + 0.0005 : 0;
+        Matrix matrix = new Matrix();
+        paint.setColor(Color.YELLOW);
+        measure.getPosTan((int) (measure.getLength() * progress), position, tan);
+        canvas.drawPath(path, paint);
+
+//        箭头
+        paint.setColor(Color.RED);
+        Path path1 = new Path();
+        path1.moveTo(position[0] - 20, position[1] + 20);
+        path1.lineTo(position[0], position[1]);
+        path1.lineTo(position[0] + 20, position[1] + 20);
+//        是否闭合，闭合就是三角形了
+        path1.close();
+        Path path2 = new Path();
+        float degrees = (float) (Math.atan2(tan[1], tan[0]) * 180.0 / Math.PI);
+        matrix.setRotate(degrees + 90, position[0], position[1]);
+        path2.addPath(path1, matrix);
+        //        进度线
+        measure.getSegment(-1000, (int) (measure.getLength() * progress), path2, true);
+        paint.setColor(Color.BLUE);
+        canvas.drawPath(path2, paint);
+        invalidate();
+    }
+```
+
+**到这里你也是path就完事了** no no no其实path还能结合SVG（ 是一种矢量图，内部用的是 xml 格式化存储方式存储这操作和数据，你完全可以将 SVG 看作是 Path 的各项操作简化书写后的存储格式）
+
+##svg和path的结合
+SVG 是一种矢量图，内部用的是 xml 格式化存储方式存储这操作和数据，你完全可以将 SVG 看作是 Path 的各项操作简化书写后的存储格式
+他们结合能创找出很多意想不到的东西，有兴趣的同学可以自己去研究一下
+
+[SVG解析成Path的解析库]（https://bigbadaboom.github.io/androidsvg/）
+
+
+![demo](https://github.com/geftimov/android-pathview/raw/master/art/settings.gif)
+
+[github开源库]（https://github.com/geftimov/android-pathview）
+
+
+[项目源码地址*戳我](https://github.com/wzgiceman/PathDemo)
+[带卡片滑动结合地址*戳我](https://github.com/wzgiceman/SwipeCardView-master)
 
 
 
