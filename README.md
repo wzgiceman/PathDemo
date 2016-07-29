@@ -318,15 +318,19 @@ pathCircle.arcTo(rectF, -90, 359);
 SVG 是一种矢量图，内部用的是 xml 格式化存储方式存储这操作和数据，你完全可以将 SVG 看作是 Path 的各项操作简化书写后的存储格式
 他们结合能创找出很多意想不到的东西，有兴趣的同学可以自己去研究一下
 
-[SVG解析成Path的解析库]（https://bigbadaboom.github.io/androidsvg/）
+[SVG解析成Path的解析库](https://bigbadaboom.github.io/androidsvg/)
 
+
+[github开源库](https://github.com/geftimov/android-pathview)
 
 ![demo](https://github.com/geftimov/android-pathview/raw/master/art/settings.gif)
 
-[github开源库]（https://github.com/geftimov/android-pathview）
+
+
 
 
 [项目源码地址*戳我](https://github.com/wzgiceman/PathDemo)
+
 [带卡片滑动结合地址*戳我](https://github.com/wzgiceman/SwipeCardView-master)
 
 
