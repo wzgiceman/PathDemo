@@ -31,7 +31,7 @@ getLength 用于获取 Path 的总长度
 * getSegment
 
 ```java
-//返回值(boolean)    判断截取是否成功	true 表示截取成功，结果存入dst中，false 截取失败，不会改变dst中内容
+//返回值(boolean)    判断截取是否成功    true 表示截取成功，结果存入dst中，false 截取失败，不会改变dst中内容
 //startD	开始截取位置距离 Path 起点的长度	取值范围: 0 <= startD < stopD <= Path总长度
 //stopD	结束截取位置距离 Path 起点的长度	取值范围: 0 <= startD < stopD <= Path总长度
 //dst	截取的 Path 将会添加到 dst 中	注意: 是添加，而不是替换
@@ -76,14 +76,14 @@ boolean getMatrix (float distance, Matrix matrix, int flags)
 
 ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/1.png)
 
-1. 通过path得到一个园，然后将圆分割5份
+### 通过path得到一个园，然后将圆分割5份
 
 ```java
 Path pathCircle = new Path();
 pathCircle.addCircle(with / 2, hight / 2, hight / 2 - pading - radius, Path.Direction.CW);
 ```
 
-2. 通过PathMeasure的getPosTan方法得到等分点在圆上的坐标,然后判断当前的状态，给选中的状态圆不同的颜色值
+### 通过PathMeasure的getPosTan方法得到等分点在圆上的坐标,然后判断当前的状态，给选中的状态圆不同的颜色值
 
 ```java
  float[] position = new float[2];
@@ -102,14 +102,14 @@ pathCircle.addCircle(with / 2, hight / 2, hight / 2 - pading - radius, Path.Dire
 
 ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/2.png)
 
-3. 实现完以后我们发现问题，圆的位置每个圆环的位置和效果图不是一样的，那是为什么呢？
+### 实现完以后我们发现问题，圆的位置每个圆环的位置和效果图不是一样的，那是为什么呢？
 
 其实在path添加大圆的时候我们只能控制path路径的轨迹方向，并不能指定其开始位置，而且现在我们写死了很多变量：颜色，圆环数等***
 解决办法：那我们用arc（圆弧）去画指定其实位置；通过指定要属性实现动态添加属性；
 
 ##优化
 
-1. 画出圆弧，指定开始位置为正上方及时-90°
+###画出圆弧，指定开始位置为正上方及时-90°
 
 ```java
 Path pathCircle = new Path();
@@ -118,7 +118,7 @@ pathCircle.arcTo(rectF, -90, 359);
 
 ```
 
-2. 通过自定义属性动态指定参数
+###通过自定义属性动态指定参数
 
 ```java
     //    宽
@@ -158,7 +158,7 @@ pathCircle.arcTo(rectF, -90, 359);
     }
 ```
 
-对应的xml
+### 对应的xml
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -182,7 +182,7 @@ pathCircle.arcTo(rectF, -90, 359);
 </resources>
 ```
 
-3. 得到坐标点，画出圆
+### 得到坐标点，画出圆
 
 ```java
  @Override
@@ -221,7 +221,7 @@ pathCircle.arcTo(rectF, -90, 359);
 
  其实上面的矩形和圆轨迹都是走的同样的逻辑，不过是path添加了不同的图形，所以你可以自由发挥哦，所以就拿上面的圆形进度为例子来讲解了
 
- 1. path给定一个图形
+### path给定一个图形
 
 ```java
   Path path = new Path();
@@ -229,7 +229,7 @@ pathCircle.arcTo(rectF, -90, 359);
 
 ```
 
-2. 通过比getPosTan得到位置和偏移量
+### 通过比getPosTan得到位置和偏移量
 
 ```java
 //        按照比例获取
@@ -240,7 +240,7 @@ pathCircle.arcTo(rectF, -90, 359);
 
 ```
 
-3. 通过得到的点坐标画出箭头
+### 通过得到的点坐标画出箭头
 
 ```java
         Path path1 = new Path();
@@ -251,7 +251,7 @@ pathCircle.arcTo(rectF, -90, 359);
         path1.close();
 ```
 
-4. 通过tan得到箭头的偏移量
+### 通过tan得到箭头的偏移量
 
 ```java
   Path path2 = new Path();
@@ -260,7 +260,7 @@ pathCircle.arcTo(rectF, -90, 359);
         path2.addPath(path1, matrix);
 ```
 
-5. 通过getSegment得到进度上截取的弧线，链接箭头
+### 通过getSegment得到进度上截取的弧线，链接箭头
 
 ```java
   //        进度线
@@ -270,7 +270,7 @@ pathCircle.arcTo(rectF, -90, 359);
 
 ```
 
-6. 最后不断的刷新界面重画
+### 最后不断的刷新界面重画
 
 ```java
     /**
