@@ -57,8 +57,8 @@ public class ProgressCircleOldView extends View {
             pathMeasure.getPosTan(distance, position, tan);
             canvas.drawCircle(position[0], position[1], radius, paint);
         }
-        paint.setColor(Color.BLUE);
-        canvas.drawPath(pathCircle,paint);
+//        paint.setColor(Color.BLUE);
+//        canvas.drawPath(pathCircle,paint);
     }
 
     public int getCurrentPosition() {
