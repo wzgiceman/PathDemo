@@ -2,12 +2,16 @@
 最近项目中需要完成以下这个需求
 
 ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/pp.png)
+
 UI给我了五张图片，我感觉太浪费了，自定义view完全可以做而且适配起来更加的方便
 ##最终实现效果
 * 项目效果
-![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/card.gif)
+
+  ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/card.gif)
+
 * 扩展
-![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
+
+  ![demo](https://github.com/wzgiceman/PathDemo/blob/master/gif/path.gif)
 
 ##需要知道技术点
 在实现这个过程之前，我们需要了解path的一系列的原理（如果你了解path的用法直接跳过）
@@ -35,4 +39,32 @@ getLength 用于获取 Path 的总长度
 
 boolean getSegment (float startD, float stopD, Path dst, boolean startWithMoveTo)
 
+```
+* getPosTan
+
+```java
+/*这个方法是用于得到路径上某一长度的位置以及该位置的正切值：
+参数    作用    备注
+返回值(boolean)	判断获取是否成功	true表示成功，数据会存入 pos 和 tan 中，
+false 表示失败，pos 和 tan 不会改变
+distance	距离 Path 起点的长度	取值范围: 0 <= distance <= getLength
+pos	该点的坐标值	坐标值: (x==[0], y==[1])
+tan	该点的正切值	正切值: (x==[0], y==[1])
+*/
+boolean getPosTan (float distance, float[] pos, float[] tan)
+```
+* getMatrix
+
+这个方法是用于得到路径上某一长度的位置以及该位置的正切值的矩阵：
+```java
+/*
+返回值(boolean)    判断获取是否成功	true表示成功，数据会存入matrix中，false 失败，matrix内容不会改变
+distance	距离 Path 起点的长度	取值范围: 0 <= distance <= getLength
+matrix	根据 falgs 封装好的matrix	会根据 flags 的设置而存入不同的内容
+flags	规定哪些内容会存入到matrix中	可选择
+POSITION_MATRIX_FLAG(位置)
+ANGENT_MATRIX_FLAG(正切)
+其实这个方法就相当于我们在前一个例子中封装 matrix 的过程由 getMatrix 替我们做了，我们可以直接得到一个封装好到 matrix，岂不快哉。
+*/
+boolean getMatrix (float distance, Matrix matrix, int flags)
 ```
