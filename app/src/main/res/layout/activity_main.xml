@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progress="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <com.view.pathdemo.view.ProgressCircleView
+        android:id="@+id/progress"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="Hello World!"
+        progress:clickColor="@color/colorPrimaryDark"
+        progress:normalColor="@color/colorAccent"
+        progress:pading="5dp"
+        progress:paintWith="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        progress:pie="5"
+        progress:radius="5dp"/>
+
+
+    <com.view.pathdemo.view.PathView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

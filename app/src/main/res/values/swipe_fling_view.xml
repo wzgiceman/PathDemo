@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressCircleOldView">
+        <!--间距-->
+        <attr name="pading" format="dimension"/>
+        <!--小圆环半径-->
+        <attr name="radius" format="dimension"/>
+        <!--圆环宽度-->
+        <attr name="paintWith" format="dimension"/>
+        <!--圆环数-->
+        <attr name="pie" format="integer"/>
+        <!--当前选中圆环-->
+        <attr name="currentPosition" format="integer"/>
+        <!--正常颜色-->
+        <attr name="normalColor" format="color"/>
+        <!-- 选中颜色-->
+        <attr name="clickColor" format="color"/>
+    </declare-styleable>
+</resources>
